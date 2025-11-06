@@ -1,0 +1,28 @@
+// Pin definitions for the LEDs
+const int redLED = 9;
+const int yellowLED = 8;
+const int greenLED = 7;
+void setup() {
+ // Set the LED pins as OUTPUT
+ pinMode(redLED, OUTPUT);
+ pinMode(yellowLED, OUTPUT);
+ pinMode(greenLED, OUTPUT);
+}
+void loop () {
+ // Green light ON for 5 seconds (simulating go signal)
+ digitalWrite(greenLED, HIGH); // Turn on green light
+ digitalWrite(yellowLED, LOW); // Ensure yellow is off
+ digitalWrite(redLED, LOW); // Ensure red is off
+ delay(5000); // Wait for 5 seconds
+// Yellow light ON for 2 seconds (simulating caution signal)
+ digitalWrite(greenLED, LOW); // Turn off green light
+ digitalWrite(yellowLED, HIGH); // Turn on yellow light
+ delay(5000); // Wait for 2 seconds
+ 
+ // Red light ON for 5 seconds (simulating stop signal)
+ digitalWrite(yellowLED, LOW); // Turn off yellow light
+ digitalWrite(redLED, HIGH); // Turn on red light
+ delay(5000); // Wait for 5 seconds
+ 
+ // Repeat the cycle
+}
