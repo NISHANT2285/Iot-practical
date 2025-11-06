@@ -1,0 +1,31 @@
+const int redPotPin = A0; // Potentiometer for red
+const int greenPotPin = A1; // Potentiometer for green
+const int bluePotPin = A2; // Potentiometer for blue
+const int redLEDPin = 9; // Red LED pin
+const int greenLEDPin = 10; // Green LED pin
+const int blueLEDPin = 11; // Blue LED pin
+void setup() {
+ 
+ pinMode(redLEDPin, OUTPUT);
+ pinMode(greenLEDPin, OUTPUT);
+pinMode(blueLEDPin, OUTPUT);
+}
+void loop() {
+ // Read the values from the potentiometers
+ int redValue = analogRead(redPotPin);
+ int greenValue = analogRead(greenPotPin);
+ intmap blueValue = analogRead(bluePotPin);
+// Map the potentiometer values (0-1023) to PWM values (0-
+255)
+ redValue = map(redValue, 0, 1023, 0, 255);
+ greenValue = map(greenValue, 0, 1023, 0, 255);
+ blueValue = map(blueValue, 0, 1023, 0, 255);
+ 
+ // Set the LED colors
+ analogWrite(redLEDPin, redValue);
+ analogWrite(greenLEDPin, greenValue);
+ analogWrite(blueLEDPin, blueValue);
+ 
+ // Small delay for stability
+ delay(10);
+}
