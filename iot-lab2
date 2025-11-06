@@ -1,0 +1,32 @@
+int mychar = 0;
+void setup() {
+Serial.begin(9600);
+pinMode(7,OUTPUT);
+pinMode(8,OUTPUT);
+pinMode(9,OUTPUT);
+}
+void loop() {
+if (Serial.available() > 0) {
+mychar = Serial.read();
+Serial.print("I received: ");
+Serial.println(mychar);
+}
+if(mychar == 114 ) //Red
+{
+digitalWrite(7,HIGH);
+digitalWrite(8,LOW);
+digitalWrite(9,LOW); 
+}
+if(mychar == 103 ) // Green
+{
+digitalWrite(7,LOW);
+digitalWrite(8,HIGH);
+digitalWrite(9,LOW); 
+}
+if(mychar == 98 ) // Blue
+{
+digitalWrite(7,LOW);
+digitalWrite(8,LOW);
+digitalWrite(9,HIGH); 
+}
+}
