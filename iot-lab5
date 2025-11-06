@@ -1,0 +1,60 @@
+#include <DHT.h>
+#define DHTPIN A0 // Pin where the DHT11 is connected
+#define DHTTYPE DHT11 // Define the type of sensor
+DHT dht(DHTPIN, DHTTYPE); // Create a DHT object
+// Variables to store temperature data
+float temperatureF; // Current temperature in Fahrenheit
+float maxTempF = -1000.0; // Maximum temperature
+float minTempF = 1000.0; // Minimum temperature
+const int resetPin = 2; // Digital pin 2 to reset min/max 
+temperatures
+unsigned long lastButtonPress = 0; // To manage debounce
+void setup() {
+Serial.begin(9600);
+pinMode(resetPin, INPUT_PULLUP);
+dht.begin(); // Initialize the DHT sensor
+Serial.println("DHT11 Temperature Sensor Program 
+Initialized");
+}
+void loop() {
+readTemperature();
+checkReset();
+delay(2000); // Read temperature every 2 seconds
+}
+void readTemperature() {
+temperatureF = dht.readTemperature(true); // true for 
+Fahrenheit
+if (isnan(temperatureF)) {
+Serial.println("Failed to read from DHT sensor!");
+return;
+}
+updateMinMax();
+displayTemperatures();
+}
+void updateMinMax() {
+if (temperatureF > maxTempF) {
+maxTempF = temperatureF;
+}
+if (temperatureF < minTempF) {
+minTempF = temperatureF;
+}
+}
+void displayTemperatures() {
+Serial.print("Current Temperature (F): ");
+Serial.println(temperatureF);
+Serial.print("Max Temperature (F): ");
+Serial.println(maxTempF);
+Serial.print("Min Temperature (F): ");
+Serial.println(minTempF);
+}
+void checkReset() {
+if (digitalRead(resetPin) == LOW) {
+unsigned long currentMillis = millis();
+if (currentMillis - lastButtonPress > 500) { // 500ms 
+debouncemaxTempF = -1000.0;
+minTempF = 1000.0;
+Serial.println("Min/Max temperatures reset.");
+lastButtonPress = currentMillis;
+}
+}
+}
